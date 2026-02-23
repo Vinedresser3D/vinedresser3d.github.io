@@ -1,65 +1,165 @@
-            <html lang="en">
-                <head>
-                    <meta charset="utf-8">
-                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                    <title>Vinedresser3D</title>
-                    <link rel="icon" href="favicon.png">
-                    <link rel="stylesheet" href="fonts/avenir-next/stylesheet.css">
-                    <link rel="stylesheet" href="fonts/segoe-print/stylesheet.css">
-                    <link rel="stylesheet" href="icons/style.css">
-                    <link rel="stylesheet" href="css/window.css">
-                    <link rel="stylesheet" href="css/carousel.css">
-                    <link rel="stylesheet" href="css/selection_panel.css">
-                    <link rel="stylesheet" href="css/main.css">
-                    <script src="js/window.js"></script>
-                    <script src="js/carousel.js"></script>
-                    <script src="js/selection_panel.js"></script>
-                    <script src="js/generation.js"></script>
-                    <script src="js/editing.js"></script>
-                    <script src="js/application.js"></script>
-                    <script src="js/main.js"></script>
-                    <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
-                </head>
-                <body>
-                    <div id="main">
-                        <div id="title" class="x-gradient-font">
-                            <span style="font-size: 40px;">Vinedresser3D: Towards Agentic Text-guided 3D Editing</span><br>
-                        </div>
-                        <div id="authors">
-                            <div>Yankuan Chi*<sup>1</sup></div>
-                            <div>Xiang Li*<sup>2</sup></div>
-                            <div>Zixuan Huang<sup>2</sup></div>
-                            <div>James Matthew Rehg<sup>2</sup></div>
-                        </div>
-                        <div id="institution">
-                            <div><sup>1</sup>The Hong Kong University of Science and Technology</div>
-                            <div><sup>2</sup>University of Illinois Urbana-Champaign</div>
-                        </div>
-                        <div id="links">
-                            <div><a id="paper" href="https://drive.google.com/file/d/16IB4qy2YT7tpSo1tEWMwUosVLWyJoCjN/view?usp=sharing">Paper</a></div>
-                            <div><a id="code" href="https://github.com/ykchizs/Vinedresser3D">Code</a></div>
-                        </div>
-                        <div id="abstract" class="x-gradient-block">
-                            Text-guided 3D editing aims to modify existing 3D assets using natural-language instructions. Current methods struggle to jointly understand complex prompts, automatically localize edits in 3D, and preserve unedited content. We introduce Vinedresser3D, an agentic framework for high-quality text-guided 3D editing that operates directly in the latent space of a native 3D generative model. Given a 3D asset and an editing prompt, Vinedresser3D uses a multimodal large language model to infer rich descriptions of the original asset, identify the parts to edit and the edit type (addition, modification, deletion), and generate decomposed structural and appearance-level text guidance. The agent then selects an informative view and applies an image editing model to obtain visual guidance. Finally, an inversion-based rectified-flow inpainting pipeline with an interleaved sampling module performs editing in the 3D latent space, enforcing prompt alignment while maintaining 3D coherence and unedited regions. Experiments on diverse 3D edits demonstrate that Vinedresser3D outperforms prior baselines in both automatic metrics and human preference studies, while enabling precise, coherent, and mask-free 3D editing.
-                        </div>
-            
-                        <div class="x-section-title"><div class="x-gradient-font">Editing Results</div></div>
-                        <div id="results"></div>
-            
-                        <div class="x-section-title"><div class="x-gradient-font">Methodology</div></div>
-                        <p>
-                            <img src="assets/fig_pipeline.png" alt="Pipeline of the method" style="width: 100%;">
-                        </p>
-                        <p>
-                            Given the original 3D asset and an editing prompt as input, Vinedresser3D employs a multimodal large language model (MLLM) as its core to generate new textual and visual guidance. Additionally, a segmentation model is used to segment the original asset and the MLLM then identifies the intended editing region. Subsequently, Vinedresser3D performs 3D editing using an inversion-based Trellis module, leveraging the provided guidance and identified editing region to produce the final edited asset.
-                        </p>
-            
-                        <div class="x-section-title"><div class="x-gradient-font">Citation</div></div>
-                        <p class="x-note">
-                            <i>
-                                This website's template is adopted from <a href="https://github.com/microsoft/TRELLIS/tree/website">TRELLIS</a>.
-                            </i>
-                        </p>
-                    </div>
-                </body>
-            </html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+        content="Vinedresser3D: Towards Agentic Text-guided 3D Editing">
+  <meta name="keywords" content="3D editing, text-guided, 3D generation, agentic">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Vinedresser3D</title>
+  <link rel="icon" href="favicon.png">
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+
+  <link rel="stylesheet" href="css/window.css">
+  <link rel="stylesheet" href="css/carousel.css">
+  <link rel="stylesheet" href="css/selection_panel.css">
+  <link rel="stylesheet" href="css/main.css">
+
+  <script src="js/window.js"></script>
+  <script src="js/carousel.js"></script>
+  <script src="js/selection_panel.js"></script>
+  <script src="js/generation.js"></script>
+  <script src="js/editing.js"></script>
+  <script src="js/application.js"></script>
+  <script src="js/main.js"></script>
+  <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+</head>
+<body>
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-2 publication-title">Vinedresser3D: Agentic Text-guided 3D Editing</h1>
+          <div class="is-size-5 publication-authors">
+            <span class="author-block"><a href="https://www.linkedin.com/in/yankuan-chi-555732327/">Yankuan Chi</a><sup>1*</sup>,</span>
+            <span class="author-block"><a href="https://ryanxli.github.io">Xiang Li</a><sup>2*</sup>,</span>
+            <span class="author-block"><a href="https://zixuanh.com">Zixuan Huang</a><sup>2</sup>,</span>
+            <span class="author-block"><a href="https://rehg.org">James Matthew Rehg</a><sup>2</sup></span>
+          </div>
+
+          <div class="is-size-5 publication-authors">
+            <span class="author-block"><sup>1</sup>The Hong Kong University of Science and Technology</span>
+            <br>
+            <!-- &nbsp;&nbsp; -->
+            <span class="author-block"><sup>2</sup>University of Illinois Urbana-Champaign</span>
+          </div>
+
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <span class="link-block">
+                <a href="https://drive.google.com/file/d/16IB4qy2YT7tpSo1tEWMwUosVLWyJoCjN/view?usp=sharing"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="ai ai-arxiv"></i>
+                  </span>
+                  <span>Paper</span>
+                </a>
+              </span>
+              <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+              <span class="link-block">
+                <a href="https://github.com/ykchizs/Vinedresser3D"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-github"></i>
+                  </span>
+                  <span>Code</span>
+                </a>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" style="padding-top: 0rem; padding-bottom: 0rem; margin-top: -3rem;">
+  <div class="container is-max-desktop">
+    <div class="hero-body has-text-centered" style="padding-top: 0;">
+      <img src="assets/teaser.png" alt="Vinedresser3D teaser" style="width: 100%; max-width: 960px;">
+      <p style="margin-top: 1rem; font-size: 1.1rem; color: #444;">
+        <b>TL;DR:</b> Vinedresser3D is an agentic framework for 3D editing. It uses a multimodal LLM to interpret editing prompts, and performs precise, mask-free 3D editing directly in the latent space of a native 3D generative model. Vinedresser3D achieves state-of-the-art results in both automatic metrics and human preference.
+      </p>
+    </div>
+  </div>
+</section>
+
+<section class="section has-background-light" style="padding-top: 0rem; margin-top: -2rem;">
+  <div class="container is-max-desktop">
+    <div class="hero-body has-text-centered">
+      <h2 class="title is-3">Abstract</h2>
+      <div class="content has-text-justified">
+        <p>
+          Text-guided 3D editing aims to modify existing 3D assets using natural-language instructions. Current methods struggle to jointly understand complex prompts, automatically localize edits in 3D, and preserve unedited content. We introduce Vinedresser3D, an agentic framework for high-quality text-guided 3D editing that operates directly in the latent space of a native 3D generative model. Given a 3D asset and an editing prompt, Vinedresser3D uses a multimodal large language model to infer rich descriptions of the original asset, identify the parts to edit and the edit type (addition, modification, deletion), and generate decomposed structural and appearance-level text guidance. The agent then selects an informative view and applies an image editing model to obtain visual guidance. Finally, an inversion-based rectified-flow inpainting pipeline with an interleaved sampling module performs editing in the 3D latent space, enforcing prompt alignment while maintaining 3D coherence and unedited regions. Experiments on diverse 3D edits demonstrate that Vinedresser3D outperforms prior baselines in both automatic metrics and human preference studies, while enabling precise, coherent, and mask-free 3D editing.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" style="padding-top: 0rem; margin-top: 0rem;">
+  <div class="container is-max-desktop">
+    <div class="hero-body has-text-centered">
+      <h2 class="title is-3">Approach</h2>
+    </div>
+    <div class="content">
+      <img src="assets/fig_pipeline.png" alt="Pipeline of the method" style="width: 100%;">
+      <p>
+        Given a 3D asset and an editing prompt, Vinedresser3D first uses a multimodal large language model (MLLM) to interpret the instruction: it describes the original asset, determines the edit type (addition, modification, or deletion), and generates decomposed textual and visual guidance. A segmentation model then partitions the asset into parts, and the MLLM identifies the specific region to edit. With this guidance and region in hand, an inversion-based editing pipeline carries out the edit directly in 3D latent space.
+      </p>
+      <img src="assets/inversion.png" alt="Inversion-based editing pipeline" style="width: 80%; display: block; margin: 1.5rem auto 0;">
+      <p>
+        Specifically, the pipeline first inverts the original 3D asset back to structured noises, conditioned on the original description. It then performs editing through inpainting, denoising with Trellis-text and Trellis-image alternately at each timestep, using both the new textual and edited visual guidance as conditions.
+      </p>
+    </div>
+  </div>
+</section>
+
+<section class="section" style="padding-top: 0rem; margin-top: 0rem;">
+  <div class="container is-max-desktop">
+    <div class="hero-body has-text-centered">
+      <h2 class="title is-3">Editing Results</h2>
+    </div>
+    <div id="results"></div>
+  </div>
+</section>
+
+<section class="section" id="BibTeX">
+  <div class="container is-max-desktop content">
+    <div class="hero-body has-text-centered">
+      <h2 class="title">Citation</h2>
+    </div>
+    <pre><code>@article{chi2025vinedresser3d,
+  author    = {Chi, Yankuan and Li, Xiang and Huang, Zixuan and Rehg, James M.},
+  title     = {Vinedresser3D: Agentic Text-guided 3D Editing},
+  journal   = {arXiv},
+  year      = {2025}
+}</code></pre>
+    <p style="color: #666; font-size: 14px;">
+      <i>
+        <!-- This website's template is adopted from <a href="https://github.com/microsoft/TRELLIS/tree/website">TRELLIS</a>. -->
+      </i>
+    </p>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="content has-text-centered">
+      This website template is adopted from <a href="https://github.com/nerfies/nerfies.github.io">Nerfies</a> and
+      <a href="https://github.com/microsoft/TRELLIS/tree/website">TRELLIS</a>.
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
